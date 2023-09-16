@@ -10,14 +10,15 @@ import { DatePipe } from '@angular/common';
 export class AppComponent {
   title = 'PIT2';
   datePipe: DatePipe = new DatePipe('en-US');
-  
+
   constructor(){}
 
   // method to get formatted date
-
   getFormattedDate(){
     var date = new Date();
     var transformDate = this.datePipe.transform(date, 'dd/MM/yyyy');
     return transformDate;
   }
+
+
 }

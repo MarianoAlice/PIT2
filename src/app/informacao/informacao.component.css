@@ -16,3 +16,12 @@
     font-size: 14px;
     letter-spacing: 3px;
 }
+
+h4, h5 {
+    color: #1d6952;
+}
+
+p {
+    text-align: justify;
+    text-justify: inter-word;
+}

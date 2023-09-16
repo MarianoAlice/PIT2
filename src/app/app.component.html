@@ -9,20 +9,25 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
-
   <div id="page-wrap">
-  <div id="max-width-colum">
+  <div id="max-width-colum" class="container-fluid">
     <app-nav-bar></app-nav-bar>
     <div id="content-wrap">
-      <div class="container-fluid text-center">
-        <app-informacao></app-informacao>
-      </div>
-      <div class="container-fluid text-center">
-        <app-calculadora></app-calculadora>
-      </div>
-      <div class="container-fluid text-center">
-        <app-contato></app-contato>
-      </div>
+      <section id = "informacao">
+        <div class="container-fluid text-center">
+          <app-informacao></app-informacao>
+        </div>
+      </section>
+      <section id = "calculadora">
+        <div class="container-fluid text-center">
+          <app-calculadora></app-calculadora>
+        </div>
+      </section>
+      <section id = "contato">
+        <div class="container-fluid text-center">
+          <app-contato></app-contato>
+        </div>
+      </section>
       <!--router-outlet></router-outlet-->
     </div>
     <div id="max-width-colum">
