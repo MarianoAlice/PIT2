@@ -1,0 +1,31 @@
+.bg-1 {
+    /* background-color: #1abc9c; Green */
+    background-image: url("../../assets/imagens/investimentoBarra.jpg");
+    background-size: 1000px 300px;
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-attachment: fixed;
+    color: #1abc9c; /* Green */
+}
+
+.bg-2 {
+    background-color: #1abc9c; /* Green */
+    color: #ffffff;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 14px;
+    letter-spacing: 3px;
+}
+
+h1, h2 {
+    color: #144939;
+}
+
+h4, h5 {
+    color: #1d6952;
+}
+
+p, ul, li {
+    text-align: justify;
+    text-justify: inter-word;
+}
