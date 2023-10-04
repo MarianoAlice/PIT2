@@ -3,11 +3,12 @@
   <h4>Calcule sua aposentadoria</h4>
   <br>
   <form (ngSubmit)="calcular()">
-    <div class="row">
+    <div class="row-md-12">
       <div class="col-md-6">
         <mat-form-field>
           <mat-label>Data de nascimento:</mat-label>
-          <input matInput [matDatepicker]="picker" [(ngModel)]="nascimentoAtual" [ngModelOptions]="{standalone: true}" (ngModelChange)="selecionaData()">
+          <!-- <input matInput [matDatepicker]="picker" [(ngModel)]="nascimentoAtual" [ngModelOptions]="{standalone: true}" (ngModelChange)="selecionaData()"> -->
+          <input matInput [matDatepicker]="picker" [(ngModel)]="nascimentoAtual" [ngModelOptions]="{standalone: true}">
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -21,19 +22,29 @@
           </mat-select>
         </mat-form-field>
       </div>
-    </div>
-    <div class="row">
       <div class="col-md-6">
         <mat-form-field>
-          <mat-label>dias até 13/11/2019</mat-label>
-          <mat-hint>Tempo de contribuição</mat-hint>
+          <mat-label>Selecione categoria especial</mat-label>
+          <mat-select [(ngModel)]="categoria" [ngModelOptions]="{standalone: true}">
+            <mat-option value="nenhum">Nenhum</mat-option>
+            <mat-option value="professor">Professor</mat-option>
+            <mat-option value="policial">Policial</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row-md-12">
+      <div class="col-md-6">
+        <mat-form-field>
+          <mat-label>anos completos</mat-label>
+          <mat-hint>contribuição até 13/11/2019</mat-hint>
           <input matInput [(ngModel)]="tempoContribuiAntesInformado" [ngModelOptions]="{standalone: true}">
         </mat-form-field>
       </div>
       <div class="col-md-6">
         <mat-form-field>
-          <mat-label>dias após 13/11/2019</mat-label>
-          <mat-hint>Tempo de contribuição</mat-hint>
+          <mat-label>anos completos</mat-label>
+          <mat-hint>contribuição após 13/11/2019</mat-hint>
           <input matInput [(ngModel)]="tempoContribuiAposInformado" [ngModelOptions]="{standalone: true}">
         </mat-form-field>
       </div>
