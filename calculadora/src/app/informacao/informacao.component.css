@@ -5,11 +5,11 @@
     background-repeat: no-repeat;
     background-position: right top;
     background-attachment: fixed;
-    color: #1abc9c; /* Green */
+    color: #caaf9fbd; /* Green */
 }
 
 .bg-2 {
-    background-color: #1abc9c; /* Green */
+    background-color: #caaf9fbd; /* Green */
     color: #ffffff;
     border-radius: 0;
     margin-bottom: 0;
@@ -18,11 +18,11 @@
 }
 
 h1, h2 {
-    color: #144939;
+    color: #3a1902;
 }
 
 h4, h5 {
-    color: #1d6952;
+    color: #5a2703;
 }
 
 p, ul, li {

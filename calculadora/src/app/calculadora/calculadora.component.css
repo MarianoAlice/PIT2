@@ -1,8 +1,39 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+
 .bg-3 {
-    background-color: #898b8b; /* White */
+    background-color: #532002;
+    background-size: 1000px 300px;
     color: #ffffff;
     border-radius: 0;
     margin-bottom: 0;
-    font-size: 14px;
+    font-size: 12px;
     letter-spacing: 3px;
+}
+
+button {
+    font-size: 16px;
+}
+
+.meuInput {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+}
+
+.titulo {
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-align: justify;
+    text-justify: inter-word;
+    background-color: #ffffff;
+    color: #532002; 
+}
+
+.conteudo {
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-align: justify;
+    text-justify: inter-word;
+    background-color: #ffffff;
+    color: #532002; 
 }
