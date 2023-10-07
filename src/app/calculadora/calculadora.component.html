@@ -1,21 +1,93 @@
 <div class="container-fluid bg-3 text-center">
   <br>
+  <h4>Calcule sua aposentadoria</h4>
   <br>
-    <p>Calculadora</p>
-    <form action="/action_page.php">
-        <div class="form-group">
-          <label for="email">Email address:</label>
-          <input type="email" class="form-control" id="email">
-        </div>
-        <div class="form-group">
-          <label for="pwd">Password:</label>
-          <input type="password" class="form-control" id="pwd">
-        </div>
-        <div class="checkbox">
-          <label><input type="checkbox"> Remember me</label>
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-      </form>
+  <form (ngSubmit)="calcular()">
+    <div class="row">
+      <div class="col-12">
+        <mat-form-field>
+          <mat-label>Data de nascimento:</mat-label>
+          <!-- <input matInput [matDatepicker]="picker" [(ngModel)]="nascimentoAtual" [ngModelOptions]="{standalone: true}" (ngModelChange)="selecionaData()"> -->
+          <input matInput [matDatepicker]="picker" [(ngModel)]="nascimentoAtual" [ngModelOptions]="{standalone: true}">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field>
+          <mat-label class="meuInput">Selecione o sexo</mat-label>
+          <mat-select [(ngModel)]="sexo" [ngModelOptions]="{standalone: true}">
+            <mat-option value="feminino">Feminino</mat-option>
+            <mat-option value="masculino">Masculino</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field>
+          <mat-label class="meuInput">Selecione categoria especial</mat-label>
+          <mat-select [(ngModel)]="categoria" [ngModelOptions]="{standalone: true}">
+            <mat-option value="nenhum" ngDefaultControl="true">Nenhum</mat-option>
+            <mat-option value="professor">Professor</mat-option>
+            <mat-option value="policial">Policial</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field>
+          <mat-label class="meuInput">Iniciou contribuição <br/>antes de 12/nov/2019</mat-label>
+          <mat-select [(ngModel)]="entrouAntes" [ngModelOptions]="{standalone: true}">
+            <mat-option value="sim" ngDefaultControl="true">Sim</mat-option>
+            <mat-option value="nao">Não</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field>
+          <mat-label class="meuInput">Tempo de contribuição - anos</mat-label>
+          <input matInput [(ngModel)]="tempoContribuicao" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <button type="submit" mat-raised-button>Calcular</button>
+      </div>
+    </div>
+  </form>
 <br>
-<br>
+</div>
+<div class="container-fluid bg-3" *ngIf="mostrar_tabela">
+  <table class="table table-bordered">
+    <tr class="titulo">
+      <td colspan="2">
+        <b>Verifique a regra mais benéfica. Mas lembre-se o valor total do cálculo do benefício só será atingido quando o homem completar 40 de contribuição e a mulher completar 35 anos</b>
+      </td>
+    </tr>
+    <tr class="conteudo">
+      <td [noWrap]="true">Regra Geral:</td>
+      <td>{{mensagemRegraGeral}}</td>
+    </tr>
+    <tr class="conteudo">
+      <td [noWrap]="true">Tansição por pontos:</td>
+      <td>{{mensagemPontos}}</td>
+    </tr>
+    <tr class="conteudo">
+      <td [noWrap]="true">Tansição por tempo <br> e idade mínimos:</td>
+      <td>{{mensagemTempoMinimoIdadeMinima}}</td>
+    </tr>
+    <tr class="conteudo">
+      <td [noWrap]="true">Tansição com fator <br> previdenciário:</td>
+      <td>{{mensagemFatorPrevidenciarioPedagio}}</td>
+    </tr>
+    <tr class="conteudo">
+      <td [noWrap]="true">Tansição com<br> 100% de pedágio:</td>
+      <td>{{mensagemIdadeMinimaPedagioCompleto}}</td>
+    </tr>
+  </table> 
+  <p>Para maiores esclarecimentos, entre em contato conosdo. Você terá um atendimento personalizado!</p>
 </div>

@@ -6,12 +6,9 @@ import { DatePipe } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
 export class AppComponent {
-  title = 'PIT2';
+  title = 'calculadora';
   datePipe: DatePipe = new DatePipe('en-US');
-
-  constructor(){}
 
   // method to get formatted date
   getFormattedDate(){
@@ -19,6 +16,4 @@ export class AppComponent {
     var transformDate = this.datePipe.transform(date, 'dd/MM/yyyy');
     return transformDate;
   }
-
-
 }

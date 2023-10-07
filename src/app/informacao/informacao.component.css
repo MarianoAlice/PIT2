@@ -5,11 +5,11 @@
     background-repeat: no-repeat;
     background-position: right top;
     background-attachment: fixed;
-    color: #1abc9c; /* Green */
+    color: #caaf9fbd; /* Green */
 }
 
 .bg-2 {
-    background-color: #1abc9c; /* Green */
+    background-color: #caaf9fbd; /* Green */
     color: #ffffff;
     border-radius: 0;
     margin-bottom: 0;
@@ -17,11 +17,15 @@
     letter-spacing: 3px;
 }
 
-h4, h5 {
-    color: #1d6952;
+h1, h2 {
+    color: #3a1902;
 }
 
-p {
+h4, h5 {
+    color: #5a2703;
+}
+
+p, ul, li {
     text-align: justify;
     text-justify: inter-word;
 }
