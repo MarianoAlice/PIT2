@@ -12,7 +12,7 @@ const outputPath = `${__dirname}/dist/${app_name}`;
 app.use(express.static(outputPath));
 //redireciona qualquer requisção para o index.html
 app.get('/*', (req, res)=>{
-	res.sendFile(`${outpuPath}/app.component.html`)
+	res.sendFile(`${outpuPath}/index.html`)
 });
 
 //ouvir a porta que o Heroku disponibilizar
