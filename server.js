@@ -16,6 +16,4 @@ app.get('/*', (req, res)=>{
 });
 
 //ouvir a porta que o Heroku disponibilizar
-app.listen(process.env.PORT || 3000, function(){
-  console.log("Node app is running at localhost:" + app.get('port'));
-});
+app.listen(process.env.PORT);
