@@ -1,19 +1,24 @@
-.navbar {
-    position: fixed;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    border: none;
-    width: 100%;
-    border-radius: 0;
-    margin-bottom: 0;
-    font-size: 12px;
-    letter-spacing: 5px;
+nav{
+    background-color: #caaf9fbd;
+}
+ul {
+    list-style-type: none;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background-color: #caaf9fbd; /* Salmão */
+    float: right;
+}
+    
+li a {
+    display: inline;
+    color: #3a1902;
+    padding: 16px;
+    text-decoration: none;
 }
   
-.navbar-nav li a:hover {
-    color: #1abc9c !important;
+li a:hover {
+    background-color: #3a1902;
+    color: #ffffff;
 }
 
-.margin {
-    margin-bottom: 45px;
-}
