@@ -27,6 +27,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const materialModules = [
   MatDatepickerModule,
@@ -44,6 +45,7 @@ const materialModules = [
   MatFormFieldModule, 
   MatInputModule, 
   MatDatepickerModule,
+  MatTooltipModule
 ];
 
 @NgModule({
