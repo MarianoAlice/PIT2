@@ -1,24 +1,13 @@
-nav{
-    background-color: #caaf9fbd;
-}
-ul {
-    list-style-type: none;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-    background-color: #caaf9fbd; /* Salmão */
-    float: right;
-}
-    
-li a {
-    display: inline;
-    color: #3a1902;
-    padding: 16px;
-    text-decoration: none;
-}
-  
-li a:hover {
-    background-color: #3a1902;
-    color: #ffffff;
+.esquerda {
+  text-align:left;
+  float:left!important;
+  font-size: 14px;
+  color:#ffffff!important;
 }
 
+.direita {
+  text-align:right;
+  float:right!important;
+  font-size: 10px;
+  color:#ffffff;
+}

@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
 @Component({
@@ -8,12 +9,20 @@ import * as moment from 'moment';
 })
 
 export class CalculadoraComponent implements OnInit {  
-  tempoContribuicao: number = 0;
-  entrouAntes:       string = '';
-  sexo:              string = '';
-  categoria:         string = '';
+  tempoContribuicao: any;
+  entrouAntes:       any;
+  sexo:              any;
+  categoria:         any;
   nascimentoAtual:   any;
-  mostrar_tabela: boolean = false;
+  mostrar_tabela:    boolean = false;
+
+  formCalcula = new FormGroup({
+    tempoContribuicao: new FormControl(0, [Validators.required, Validators.pattern('^[0-9]*$'), Validators.min(0), Validators.max(60)]),
+    entrouAntes:       new FormControl('', [Validators.required]),
+    sexo:              new FormControl('', [Validators.required]),
+    categoria:         new FormControl('', [Validators.required]),
+    nascimentoAtual:   new FormControl(null, [Validators.required])
+  });
 
   //Bloco de mensagens
   mensagemRegraGeral:                 string = '';
@@ -43,13 +52,23 @@ export class CalculadoraComponent implements OnInit {
   }
   
   calcular(): void {
-    this.mensagemRegraGeral = this.regraGeral().mensagemRegraGeral;
-    this.mensagemPontos = this.transicaoPontos().mensagemPontos;
-    this.mensagemTempoMinimoIdadeMinima = this.regraTempoMinimoIdadeMinima().mensagemTempoMinimoIdadeMinima
-    this.mensagemFatorPrevidenciarioPedagio = this.regraFatorPrevidenciarioPedagio().mensagemFatorPrevidenciarioPedagio
-    this.mensagemIdadeMinimaPedagioCompleto = this.regraIdadeMinimaPedagioCompleto().mensagemIdadeMinimaPedagioCompleto
-    this.mostrar_tabela = true;
-  }
+    if(this.formCalcula.valid){
+      this.tempoContribuicao = this.formCalcula.controls.tempoContribuicao.value;
+      this.entrouAntes       = this.formCalcula.controls.entrouAntes.value;
+      this.sexo              = this.formCalcula.controls.sexo.value;
+      this.categoria         = this.formCalcula.controls.categoria.value;
+      this.nascimentoAtual   = this.formCalcula.controls.nascimentoAtual.value;
+  
+      this.mensagemRegraGeral = this.regraGeral().mensagemRegraGeral;
+      this.mensagemPontos = this.transicaoPontos().mensagemPontos;
+      this.mensagemTempoMinimoIdadeMinima = this.regraTempoMinimoIdadeMinima().mensagemTempoMinimoIdadeMinima
+      this.mensagemFatorPrevidenciarioPedagio = this.regraFatorPrevidenciarioPedagio().mensagemFatorPrevidenciarioPedagio
+      this.mensagemIdadeMinimaPedagioCompleto = this.regraIdadeMinimaPedagioCompleto().mensagemIdadeMinimaPedagioCompleto
+      this.mostrar_tabela = true;
+    } else {
+      alert("Verifique o preenchimento dos campos obrigatórios!")
+    }
+  };
 
   verIdade(){
     var dataAtual = moment();
@@ -59,7 +78,7 @@ export class CalculadoraComponent implements OnInit {
     var dataIdade62: any;
     var dataIdade65: any;
     if (this.nascimentoAtual !== null){
-      idade = dataAtual.diff(this.nascimentoAtual, 'years');
+      idade       = dataAtual.diff(this.nascimentoAtual, 'years');
       dataIdade55 = moment(this.nascimentoAtual).add(55, 'years');
       dataIdade57 = moment(this.nascimentoAtual).add(57, 'years');
       dataIdade60 = moment(this.nascimentoAtual).add(60, 'years');
@@ -108,17 +127,17 @@ export class CalculadoraComponent implements OnInit {
     var idadeMinima = Number(idadeMinCalculo) - Number(idadeCalculo)
     
     if(tempoFaltaContribuir <= 0 && idadeMinima <= 0){
-      var mensagemRegraGeral = "Já atingiu os requisitos para aposentar pela regra geral."
+      var mensagemRegraGeral = "Já ATINGIU os requisitos para aposentar pela regra geral."
     } else {
       var tempoTexto: string = "";
       var idadeTexto: string = "";
       if(tempoFaltaContribuir > 0){
-        tempoTexto = "Ainda falta contribuir por "+tempoFaltaContribuir+ " ano(s)."
+        tempoTexto = "Ainda falta contribuir por "+tempoFaltaContribuir+ " ano(s) para ATINGIR o tempo mínimo de contribuição"
       } else {
-        tempoTexto = "Você já atingiu o tempo mínimo de contribuição."
+        tempoTexto = "Você já ATINGIU o tempo mínimo de contribuição."
       }
       if (idadeMinima > 0){
-        idadeTexto = "Daqui a "+idadeMinima+ " ano(s) você atingirá a idade mínima."
+        idadeTexto = "Daqui a "+idadeMinima+ " ano(s) você ATINGIRÁ a idade mínima."
       }
       var mensagemRegraGeral = tempoTexto+" "+idadeTexto
     }
@@ -136,11 +155,11 @@ export class CalculadoraComponent implements OnInit {
       var pontosValidos = this.tabela(anoAjustado).pontosHomem
     }
     if((tempoTotal+idadeCalculo)>pontosValidos){
-      var mensagemPontos = "Atingiu pontos!"
+      var mensagemPontos = "ATINGIU pontos!"
     } else {
       var pontosFaltantes = pontosValidos - (tempoTotal+idadeCalculo)
       var tempoFaltante = pontosFaltantes/2
-      var mensagemPontos = "Ainda faltam " +pontosFaltantes+" pontos. Caso continue contribuindo a expectativa é de se aposentar em "+tempoFaltante+" ano(s) por esta regra!"
+      var mensagemPontos = "Ainda faltam " +pontosFaltantes+" pontos. Caso continue contribuindo a expectativa é de se aposentar em "+tempoFaltante+" ano(s) por esta regra."
     }
     return { mensagemPontos:mensagemPontos}
   }
@@ -244,12 +263,12 @@ export class CalculadoraComponent implements OnInit {
     }
     if (idadeMinCalculo > idadeCalculo) {
       idadeFaltante = idadeMinCalculo - idadeCalculo;
-      mensagemTempoMinimoIdadeMinima = "Tempo para aposentadoria pela regra da idade mínima ainda não foi atendido. Você poderá se aposentar quando cumprir "+tempoMinCalculo+ " ano(s) de contribuição e "+idadeMinCalculo+" ano(s) e "+mesCalculo+" meses de idade. Faltam "+idadeFaltante+" ano(s).";
+      mensagemTempoMinimoIdadeMinima = "Tempo para aposentadoria pela regra da idade mínima ainda NÃO FOI ATINGIDO. Você poderá se aposentar quando cumprir "+tempoMinCalculo+ " ano(s) de contribuição e "+idadeMinCalculo+" ano(s) e "+mesCalculo+" meses de idade. Faltam "+idadeFaltante+" ano(s).";
     } else if (idadeMinCalculo == idadeCalculo) {
       idadeFaltante = 0;
       if (mesCalculo > mesIdade) {
         mesFaltante = mesCalculo - mesIdade;
-        mensagemTempoMinimoIdadeMinima = "Tempo para aposentadoria pela regra da idade mínima ainda não foi atendido. Você poderá se aposentar quando cumprir "+tempoMinCalculo+ " ano(s) de contribuição e "+idadeMinCalculo+" ano(s) e "+mesCalculo+" meses de idade. Faltam "+mesFaltante+" meses.";
+        mensagemTempoMinimoIdadeMinima = "Tempo para aposentadoria pela regra da idade mínima ainda NÃO FOI ATINGIDO. Você poderá se aposentar quando cumprir "+tempoMinCalculo+ " ano(s) de contribuição e "+idadeMinCalculo+" ano(s) e "+mesCalculo+" meses de idade. Faltam "+mesFaltante+" meses.";
       } else {
         mesFaltante = 0;
         mensagemTempoMinimoIdadeMinima = "Tempo para aposentadoria pela regra da idade mínima ATINGIDO. Você já cumpriu "+tempoMinCalculo+ " ano(s) de contribuição e "+idadeMinCalculo+" ano(s) e "+mesCalculo+" meses de idade.";
@@ -393,23 +412,23 @@ idadeAjustadaComMeses(AnoAtual: number){
       if(tempoCalculo >= novoTempo){
         mensagemFatorPrevidenciarioPedagio = "Você ATINGIU a regra de transição com fator previdenciário ao cumprir "+novoTempo+" ano(s) de contribuição.";
       } else{
-        mensagemFatorPrevidenciarioPedagio = "Você atingirá a regra de transição com fator previdenciário em "+tempoAjustado+" ano(s). Ao cumprir "+novoTempo+" ano(s) a mais do tempo mínimo de contribuição ("+tempoMinCalculo+").";
+        mensagemFatorPrevidenciarioPedagio = "Você ATINGIRÁ a regra de transição com fator previdenciário em "+tempoAjustado+" ano(s). Ao cumprir "+novoTempo+" ano(s) a mais do tempo mínimo de contribuição ("+tempoMinCalculo+").";
       }
     } else {
-      mensagemFatorPrevidenciarioPedagio = "A regra de pedágio não se aplica à sua situação!"
+      mensagemFatorPrevidenciarioPedagio = "A regra de pedágio NÃO se aplica à sua situação"
     }
   return{mensagemFatorPrevidenciarioPedagio: mensagemFatorPrevidenciarioPedagio}
   }
 
   regraIdadeMinimaPedagioCompleto(){
-    const idadeCalculo =       Number(this.verIdade().idade)
+    const idadeCalculo = Number(this.verIdade().idade)
     const tempoCalculo = Number(this.tempoContribuicao);
     let tempoMinCalculo: number = 0;
     let idadeMinCalculo: number = 0;
-    let diferencaIdade: number = 0;
-    let pedagio: number = 0;
-    let tempoAjustado: number = 0;
-    let tempoFaltante: number = 0;
+    let diferencaIdade:  number = 0;
+    let pedagio:         number = 0;
+    let tempoAjustado:   number = 0;
+    let tempoFaltante:   number = 0;
     let mensagemIdadeMinimaPedagioCompleto: string = '';
 
     if (this.sexo === 'feminino'){
@@ -436,13 +455,13 @@ idadeAjustadaComMeses(AnoAtual: number){
 
     if (idadeCalculo >= idadeMinCalculo){
       if(tempoFaltante <= 0){
-        mensagemIdadeMinimaPedagioCompleto = "Você atingiu a regra de idade mínima com 100% de pedágio ao cumprir "+tempoAjustado+" ano(s) de contribbuição e "+idadeMinCalculo+" ano(s) de idade."
+        mensagemIdadeMinimaPedagioCompleto = "Você ATINGIU a regra de idade mínima com 100% de pedágio ao cumprir "+tempoAjustado+" ano(s) de contribbuição e "+idadeMinCalculo+" ano(s) de idade."
       } else {
-        mensagemIdadeMinimaPedagioCompleto = "Você já atingiu a idade mínima de "+idadeMinCalculo+" ano(s). Faltam "+tempoFaltante+" ano(s) de contribuição para cumprir os "+tempoAjustado+" ano(s) referentes ao pedágio de 100%."
+        mensagemIdadeMinimaPedagioCompleto = "Você já ATINGIU a idade mínima de "+idadeMinCalculo+" ano(s). Faltam "+tempoFaltante+" ano(s) de contribuição para cumprir os "+tempoAjustado+" ano(s) referentes ao pedágio de 100%."
       }
     } else {
       diferencaIdade = idadeMinCalculo - idadeCalculo;
-      mensagemIdadeMinimaPedagioCompleto = "Você ainda não atingiu a idade mínima de "+idadeMinCalculo+" ano(s). Dentro de "+diferencaIdade+" ano(s) e após cumprir "+tempoAjustado+" ano(s) de contribuição você terá cumprido a idade mínima e o pedágio de 100%."
+      mensagemIdadeMinimaPedagioCompleto = "Você ainda NÃO ATINGIU a idade mínima de "+idadeMinCalculo+" ano(s). Dentro de "+diferencaIdade+" ano(s) e após cumprir "+tempoAjustado+" ano(s) de contribuição você terá cumprido a idade mínima e o pedágio de 100%."
     }
 
   return{mensagemIdadeMinimaPedagioCompleto: mensagemIdadeMinimaPedagioCompleto}

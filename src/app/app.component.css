@@ -1,8 +1,7 @@
 body {
     font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 14px;
-	color: #054b17;
-	text-align: center;
+	color: #3a1902;
     padding-top: 70px;
     padding-bottom: 70px;
 }
@@ -16,19 +15,86 @@ body {
 }
 
 .bg-5 {
-    background-color: #2f2f2f;
-    color: #ffffff;
+    background-image: url("../assets/imagens/investimentoBarra.jpg");
+    color: #a38574bd;
     border-radius: 0;
     margin-bottom: 0;
     font-size: 10px;
     letter-spacing: 3px;
 }
 
+p {
+    color: #3a1902;
+}
+
 .fixed-top {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 999;
+    z-index: 1;
     width: 100%;
     height: 23px;
+}
+
+.bar {
+    width:100%;
+    overflow:hidden;
+    display:inline-block;
+    color:#ffffff!important;
+    background-color:#3a1902!important;
+    letter-spacing:4px;
+    padding:8px 16px!important
+}
+
+.card {
+    box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)
+}
+
+.header {
+    position:relative
+}
+
+.container-1 {
+    padding:0.01em 16px;
+    padding-top:32px!important;
+    padding-bottom:32px!important
+}
+
+.h3-padding-16 {
+    border-bottom:1px solid #ffffff!important;
+    border-color:#f1f1f1!important;
+    color:#3a1902;
+    padding-top:16px!important;
+    padding-bottom:16px!important
+}
+
+.row-padding {
+    padding:0 8px
+}
+
+.col-1{
+    float:left;
+    width:100%;
+    padding:0 8px;
+    margin-bottom:16px!important;
+    position:relative
+}
+
+.container-2 {
+    padding:0.01em 16px;
+    padding-top:32px!important;
+    padding-bottom:32px!important
+}
+
+.content {
+    max-width:980px;
+    margin-left:auto;
+    margin-right:auto;
+    padding:8px 16px!important
+}
+
+.footer {
+    text-align:center!important;
+    padding-top:16px!important;
+    padding-bottom:16px!important
 }
