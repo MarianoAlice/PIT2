@@ -6,7 +6,7 @@
     <div class="form-group">
       <mat-form-field>
         <mat-label>Data de nascimento:</mat-label>
-        <input formControlName="nascimentoAtual" matInput [matDatepicker]="picker" required >
+        <input formControlName="nascimentoAtual" matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" required >
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -68,7 +68,7 @@
       </td>
     </tr>
     <tr class="conteudo">
-      <td [noWrap]="true"><b>Tansição por pontos:</b></td>
+      <td [noWrap]="true"><b>Transição por pontos:</b></td>
       <td>
         {{mensagemPontos}}
         <button mat-raised-button 
@@ -78,7 +78,7 @@
       </td>
     </tr>
     <tr class="conteudo">
-      <td [noWrap]="true"><b>Tansição por tempo e idade mínimos:</b></td>
+      <td [noWrap]="true"><b>Transição por tempo e idade mínimos:</b></td>
       <td>
         {{mensagemTempoMinimoIdadeMinima}}
         <button mat-raised-button 
@@ -88,7 +88,7 @@
       </td>
     </tr>
     <tr class="conteudo">
-      <td [noWrap]="true"><b>Tansição com fator previdenciário:</b></td>
+      <td [noWrap]="true"><b>Transição com fator previdenciário:</b></td>
       <td>
         {{mensagemFatorPrevidenciarioPedagio}}
         <button mat-raised-button 
@@ -98,7 +98,7 @@
       </td>
     </tr>
     <tr class="conteudo">
-      <td [noWrap]="true"><b>Tansição com 100% de pedágio:</b></td>
+      <td [noWrap]="true"><b>Transição com 100% de pedágio:</b></td>
       <td>
         {{mensagemIdadeMinimaPedagioCompleto}}
         <button mat-raised-button 
@@ -109,5 +109,6 @@
     </tr>
   </table> 
   <p>Para maiores esclarecimentos, entre em contato conosco. Você terá um atendimento personalizado!</p>
+  <br>
 </div>
 

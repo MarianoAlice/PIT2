@@ -1,12 +1,26 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as moment from 'moment';
 
 @Component({
   selector: 'app-calculadora',
   templateUrl: './calculadora.component.html',
-  styleUrls: ['./calculadora.component.css']
+  styleUrls: ['./calculadora.component.css'],
+  providers: [
+    // The locale would typically be provided on the root module of your application. We do it at
+    // the component level here, due to limitations of our example generation script.
+    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
+  
+    // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
+    // `MatMomentDateModule` in your applications root module. We provide it at the component level
+    // here, due to limitations of our example generation script.
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ],
 })
+
 
 export class CalculadoraComponent implements OnInit {  
   tempoContribuicao: any;
@@ -15,6 +29,9 @@ export class CalculadoraComponent implements OnInit {
   categoria:         any;
   nascimentoAtual:   any;
   mostrar_tabela:    boolean = false;
+  hoje  = moment();
+  minDate = moment(this.hoje).add(-100, 'years');
+  maxDate = moment(this.hoje).add(-18, 'years');
 
   formCalcula = new FormGroup({
     tempoContribuicao: new FormControl(0, [Validators.required, Validators.pattern('^[0-9]*$'), Validators.min(0), Validators.max(60)]),
@@ -50,11 +67,6 @@ export class CalculadoraComponent implements OnInit {
   contribuicaoParaTetoMulher:          Number = 35;
   contribuicaoParaTetoHomem:           Number = 40;
 
-  // @Output() onSubmit = new EventEmitter()
-
-  constructor(){
-
-  }
   
   calcular(): void {
     if(this.formCalcula.valid){
@@ -71,7 +83,7 @@ export class CalculadoraComponent implements OnInit {
       this.mensagemIdadeMinimaPedagioCompleto = this.regraIdadeMinimaPedagioCompleto().mensagemIdadeMinimaPedagioCompleto
 
       this.mensagemDetalheRegraGeral = this.regraGeral().mensagemDetalheRegraGeral;
-      this.mensagemDetalhePontos = this.transicaoPontos().mensagemPontos;
+      this.mensagemDetalhePontos = this.transicaoPontos().mensagemDetalhePontos;
       this.mensagemDetalheTempoMinimoIdadeMinima = this.regraTempoMinimoIdadeMinima().mensagemDetalheTempoMinimoIdadeMinima
       this.mensagemDetalheFatorPrevidenciarioPedagio = this.regraFatorPrevidenciarioPedagio().mensagemDetalheFatorPrevidenciarioPedagio
       this.mensagemDetalheIdadeMinimaPedagioCompleto = this.regraIdadeMinimaPedagioCompleto().mensagemDetalheIdadeMinimaPedagioCompleto
@@ -175,12 +187,14 @@ export class CalculadoraComponent implements OnInit {
     }
     if((tempoTotal+idadeCalculo)>pontosValidos){
       mensagemPontos = "ATINGIU os pontos!"
-      mensagemDetalhePontos = "Eram necessários "+pontosValidos+" pontos e você já possui "+(tempoTotal+idadeCalculo)+" pntos"
+      mensagemDetalhePontos = "Eram necessários "+pontosValidos+" pontos e você já possui "+(tempoTotal+idadeCalculo)+" pontos"
     } else {
       var pontosFaltantes = pontosValidos - (tempoTotal+idadeCalculo)
-      var tempoFaltante = pontosFaltantes/2
+      const anos = Math.floor(pontosFaltantes/2);
+      const remainder = pontosFaltantes % 2; // => 1
+      var txtTempoFaltante = remainder ==1 ? anos+' ano(s) 6 meses ' : anos+ ' ano(s)'  
       mensagemPontos = "FALTAM " +pontosFaltantes+" pontos."
-      mensagemDetalhePontos = "Caso continue contribuindo a expectativa é de se aposentar em "+tempoFaltante+" ano(s) por esta regra."
+      mensagemDetalhePontos = "Caso continue contribuindo a expectativa é de se aposentar em "+txtTempoFaltante+" por esta regra."
     }
     return { mensagemPontos:mensagemPontos, mensagemDetalhePontos: mensagemDetalhePontos}
   }
@@ -253,6 +267,7 @@ export class CalculadoraComponent implements OnInit {
     var idadeMinCalculo:       number = 0;
     var tempoMinCalculo:       number = 0;
     var mesCalculo:            number = 0;
+    var txtMesCalculo:         string = '';
     var mensagemTempoMinimoIdadeMinima: string = '';
     var mensagemDetalheTempoMinimoIdadeMinima: string = '';
 
@@ -261,20 +276,24 @@ export class CalculadoraComponent implements OnInit {
         tempoMinCalculo = 30;
         idadeMinCalculo = this.idadeAjustadaComMeses(AnoAtual).anoProfessora;
         mesCalculo = this.idadeAjustadaComMeses(AnoAtual).mesMulher;
+        txtMesCalculo = mesCalculo==0? '': 'e '+txtMesCalculo+' meses';
       } else {
         tempoMinCalculo = 30;
         idadeMinCalculo = this.idadeAjustadaComMeses(AnoAtual).anoMulher;
         mesCalculo = this.idadeAjustadaComMeses(AnoAtual).mesMulher;
+        txtMesCalculo = mesCalculo==0? '': 'e '+txtMesCalculo+' meses';
       }
     } else if (this.sexo === 'masculino'){
       if(this.categoria==='professor') {
         tempoMinCalculo = 35;
         idadeMinCalculo = this.idadeAjustadaComMeses(AnoAtual).anoProfessor;
         mesCalculo = this.idadeAjustadaComMeses(AnoAtual).mesHomem;
+        txtMesCalculo = mesCalculo==0? '': 'e '+txtMesCalculo+' meses';
       } else {
         tempoMinCalculo = 35;
         idadeMinCalculo = this.idadeAjustadaComMeses(AnoAtual).anoHomem;
         mesCalculo = this.idadeAjustadaComMeses(AnoAtual).mesHomem;
+        txtMesCalculo = mesCalculo==0? '': 'e '+txtMesCalculo+' meses';
       }
     }
 
@@ -286,23 +305,23 @@ export class CalculadoraComponent implements OnInit {
     if (idadeMinCalculo > idadeCalculo) {
       idadeFaltante = idadeMinCalculo - idadeCalculo;
       mensagemTempoMinimoIdadeMinima = "Tempo NÃO ATINGIDO.";
-      mensagemDetalheTempoMinimoIdadeMinima = "Pela regra da idade mínima, você poderá se aposentar quando cumprir "+tempoMinCalculo+ " ano(s) de contribuição e "+idadeMinCalculo+" ano(s) e "+mesCalculo+" meses de idade. Faltam "+idadeFaltante+" ano(s).";
+      mensagemDetalheTempoMinimoIdadeMinima = "Pela regra da idade mínima, você poderá se aposentar quando cumprir "+tempoMinCalculo+ " ano(s) de contribuição e "+idadeMinCalculo+" ano(s) "+txtMesCalculo+" de idade. Faltam "+idadeFaltante+" ano(s).";
     } else if (idadeMinCalculo == idadeCalculo) {
       idadeFaltante = 0;
       if (mesCalculo > mesIdade) {
         mesFaltante = mesCalculo - mesIdade;
         mensagemTempoMinimoIdadeMinima = "Tempo NÃO ATINGIDO.";
-        mensagemDetalheTempoMinimoIdadeMinima = "Pela regra da idade mínima, você poderá se aposentar quando cumprir "+tempoMinCalculo+ " ano(s) de contribuição e "+idadeMinCalculo+" ano(s) e "+mesCalculo+" meses de idade. Faltam "+mesFaltante+" meses.";
+        mensagemDetalheTempoMinimoIdadeMinima = "Pela regra da idade mínima, você poderá se aposentar quando cumprir "+tempoMinCalculo+ " ano(s) de contribuição e "+idadeMinCalculo+" ano(s) "+txtMesCalculo+" de idade. Faltam "+mesFaltante+" meses.";
       } else {
         mesFaltante = 0;
         mensagemTempoMinimoIdadeMinima = "Tempo ATINGIDO.";
-        mensagemDetalheTempoMinimoIdadeMinima = "Você já cumpriu "+tempoMinCalculo+ " ano(s) de contribuição e "+idadeMinCalculo+" ano(s) e "+mesCalculo+" meses de idade."
+        mensagemDetalheTempoMinimoIdadeMinima = "Você já cumpriu "+tempoMinCalculo+ " ano(s) de contribuição e "+idadeMinCalculo+" ano(s) "+txtMesCalculo+" de idade."
       }
     } else if (idadeMinCalculo < idadeCalculo){
       idadeFaltante = 0;
       mesFaltante = 0;
       mensagemTempoMinimoIdadeMinima = "Tempo ATINGIDO.";
-      mensagemDetalheTempoMinimoIdadeMinima = "Você já cumpriu "+tempoMinCalculo+ " ano(s) de contribuição e "+idadeMinCalculo+" ano(s) e "+mesCalculo+" meses de idade.";
+      mensagemDetalheTempoMinimoIdadeMinima = "Você já cumpriu "+tempoMinCalculo+ " ano(s) de contribuição e "+idadeMinCalculo+" ano(s) e "+mesCalculo+".";
     }
 
   return{mensagemTempoMinimoIdadeMinima: mensagemTempoMinimoIdadeMinima, mensagemDetalheTempoMinimoIdadeMinima: mensagemDetalheTempoMinimoIdadeMinima}
@@ -487,7 +506,7 @@ idadeAjustadaComMeses(AnoAtual: number){
     if (idadeCalculo >= idadeMinCalculo){
       if(tempoFaltante <= 0){
         mensagemIdadeMinimaPedagioCompleto = "Tempo ATINGIDO."
-        mensagemDetalheIdadeMinimaPedagioCompleto = "Você ATINGIU a regra de idade mínima com 100% de pedágio ao cumprir "+tempoAjustado+" ano(s) de contribbuição e "+idadeMinCalculo+" ano(s) de idade."
+        mensagemDetalheIdadeMinimaPedagioCompleto = "Você ATINGIU a regra de idade mínima com 100% de pedágio ao cumprir "+tempoAjustado+" ano(s) de contribuição e "+idadeMinCalculo+" ano(s) de idade."
       } else {
         mensagemIdadeMinimaPedagioCompleto = "Idade ATINGIDA. Faltam "+tempoFaltante+" ano(s) de contribuição"
         mensagemDetalheIdadeMinimaPedagioCompleto = "Você já ATINGIU a idade mínima de "+idadeMinCalculo+" ano(s). Faltam "+tempoFaltante+" ano(s) de contribuição para cumprir os "+tempoAjustado+" ano(s) referentes ao pedágio de 100%."

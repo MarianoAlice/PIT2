@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
+registerLocaleData(localePT);
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,7 +14,6 @@ import { ContatoComponent } from './contato/contato.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { InformacaoComponent } from './informacao/informacao.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-registerLocaleData(localePT);
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
@@ -42,9 +42,6 @@ const materialModules = [
   MatToolbarModule,
   MatDividerModule,
   MatMenuModule,
-  MatFormFieldModule, 
-  MatInputModule, 
-  MatDatepickerModule,
   MatTooltipModule
 ];
 
@@ -68,9 +65,7 @@ const materialModules = [
   ],
   exports: materialModules,
   providers: [
-    {
-      provide: LOCALE_ID, useValue: 'pt-br'
-    },
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
   ],
   bootstrap: [AppComponent]
 })
