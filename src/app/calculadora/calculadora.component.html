@@ -49,16 +49,19 @@
   </form>
 <br> 
 
-</div>
 <div class="container-fluid bg-3" *ngIf="mostrar_tabela">
-  <table class="table table-striped">
+  <table class="table table-sm">
     <tr class="titulo">
       <td colspan="2">
-        <b>Verifique a regra mais benéfica. Mas lembre-se: o cálculo do benefício segue outra regra.</b>
+        <b>Verifique a regra mais benéfica para o cálculo do tempo.</b><br>
+          <small>* O cálculo do benefício segue outra regra.</small>
       </td>
     </tr>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
     <tr class="conteudo">
-      <td [noWrap]="true"><b>Regra Geral:</b></td>
+      <td><small><b>Regra Geral:</b></small></td>
       <td>
         {{mensagemRegraGeral}}
         <button mat-raised-button 
@@ -68,7 +71,7 @@
       </td>
     </tr>
     <tr class="conteudo">
-      <td [noWrap]="true"><b>Transição por pontos:</b></td>
+      <td><small><b>Transição por pontos:</b></small></td>
       <td>
         {{mensagemPontos}}
         <button mat-raised-button 
@@ -78,7 +81,7 @@
       </td>
     </tr>
     <tr class="conteudo">
-      <td [noWrap]="true"><b>Transição por tempo e idade mínimos:</b></td>
+      <td><small><b>Transição por tempo e idade mínimos:</b></small></td>
       <td>
         {{mensagemTempoMinimoIdadeMinima}}
         <button mat-raised-button 
@@ -88,7 +91,7 @@
       </td>
     </tr>
     <tr class="conteudo">
-      <td [noWrap]="true"><b>Transição com fator previdenciário:</b></td>
+      <td><small><b>Transição com fator previdenciário:</b></small></td>
       <td>
         {{mensagemFatorPrevidenciarioPedagio}}
         <button mat-raised-button 
@@ -98,7 +101,7 @@
       </td>
     </tr>
     <tr class="conteudo">
-      <td [noWrap]="true"><b>Transição com 100% de pedágio:</b></td>
+      <td><small><b>Transição com 100% de pedágio:</b></small></td>
       <td>
         {{mensagemIdadeMinimaPedagioCompleto}}
         <button mat-raised-button 
@@ -110,5 +113,6 @@
   </table> 
   <p>Para maiores esclarecimentos, entre em contato conosco. Você terá um atendimento personalizado!</p>
   <br>
+</div>
 </div>
 
